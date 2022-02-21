@@ -1,3 +1,5 @@
-import sliderMain from "./modules/slider";
+import moduleOne from "./modules/one";
+import moduleTwo from "./modules/two";
 
-sliderMain();
+moduleOne();
+moduleTwo();
