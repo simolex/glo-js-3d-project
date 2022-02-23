@@ -38,7 +38,5 @@ const modal = () => {
   popupClose.addEventListener("click", () => {
     modalBlock.style.display = "";
   });
-
-  console.log(modalBlock);
 };
 export default modal;
