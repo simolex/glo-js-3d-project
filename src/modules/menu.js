@@ -1,3 +1,4 @@
+import smoothScroll from "./smoothScroll";
 const menu = () => {
   const menuButton = document.querySelector(".menu");
   const menuContent = document.querySelector("menu");
@@ -11,7 +12,13 @@ const menu = () => {
   menuButton.addEventListener("click", toggleMenu);
   closeButton.addEventListener("click", toggleMenu);
 
-  menuItems.forEach((item) => item.addEventListener("click", toggleMenu));
+  menuItems.forEach((item) =>
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      toggleMenu();
+      smoothScroll(e.target);
+    })
+  );
 };
 
 export default menu;

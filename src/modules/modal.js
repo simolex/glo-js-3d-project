@@ -28,7 +28,6 @@ const modal = () => {
   buttons.forEach((btn) =>
     btn.addEventListener("click", () => {
       modalBlock.style.display = "block";
-      console.dir(window);
       if (window.outerWidth > 768) {
         modalAnimation();
       }
