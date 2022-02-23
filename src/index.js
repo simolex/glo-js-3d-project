@@ -1,5 +1,7 @@
 import moduleTimer from "./modules/timer";
-import moduleTwo from "./modules/two";
+import moduleMenu from "./modules/menu";
+import moduleModal from "./modules/modal";
 
 moduleTimer("08 march 2022");
-moduleTwo();
+moduleMenu();
+moduleModal();
