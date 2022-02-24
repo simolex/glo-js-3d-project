@@ -4,7 +4,7 @@ const validateForm3 = () => {
   const emailInput = document.getElementById("form3-email");
   const phoneInput = document.getElementById("form3-phone");
 
-  const hasNotText = /[^а-яА-Я \-]/gi;
+  const hasNotText = /[^а-яёА-ЯЁ \-]/gi;
   const hasNotEmail = /[^\w\-\@\.\!\~\*\']/gi;
   const hasNotTelephone = /[^\d\(\)\-']/gi;
 
