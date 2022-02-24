@@ -8,6 +8,16 @@ const validateForm1 = () => {
   const hasNotEmail = /[^\w\-\@\.\!\~\*\']/gi;
   const hasNotTelephone = /[^\d\(\)\-']/gi;
 
+  nameInput.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(hasNotText, "");
+  });
+  emailInput.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(hasNotEmail, "");
+  });
+  phoneInput.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(hasNotTelephone, "");
+  });
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     let isError = false;
