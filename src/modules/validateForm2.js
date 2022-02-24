@@ -9,6 +9,19 @@ const validateForm2 = () => {
   const hasNotEmail = /[^\w\-\@\.\!\~\*\']/gi;
   const hasNotTelephone = /[^\d\(\)\-']/gi;
 
+  nameInput.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(hasNotText, "");
+  });
+  messageInput.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(hasNotText, "");
+  });
+  emailInput.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(hasNotEmail, "");
+  });
+  phoneInput.addEventListener("input", (e) => {
+    e.target.value = e.target.value.replace(hasNotTelephone, "");
+  });
+
   const clearData = (regexp, value) => {
     const repeatSpace = /( ){2,}/gi;
     const repeatMinus = /(\-){2,}/gi;
