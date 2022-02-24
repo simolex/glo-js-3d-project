@@ -21,11 +21,10 @@ const validateForm1 = () => {
   };
 
   const upperFirstLitter = (value) => {
-    const firstLitter = /[ \-]*?([а-я]+?)[ \-]*?/gi;
-    //value = value.toLowerCase();
+    const firstLitter = /((^[а-яё])|((?<=[^а-яё])[а-яё]))/gi;
+    value = value.toLowerCase();
     value = value.replace(firstLitter, (str, $1) => {
-      console.log(`${$1}`);
-      return `${$1}`[0].toUpperCase() + `${$1}`.substring(1).toLowerCase();
+      return ($1 + "").toUpperCase();
     });
     return value;
   };
