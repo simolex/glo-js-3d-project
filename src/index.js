@@ -3,16 +3,10 @@ import moduleMenu from "./modules/menu";
 import moduleModal from "./modules/modal";
 import serviceBlock from "./modules/serviceBlock";
 import moduleCalculate from "./modules/calculate";
-import validateForm1 from "./modules/validateForm1";
-import validateForm2 from "./modules/validateForm2";
-import validateForm3 from "./modules/validateForm3";
 
-//validateForm
+import formValidate from "./modules/formValidate";
 
 //import smoothScroll from "./modules/smoothScroll";
-const hasNotText = /[^а-яёА-ЯЁ \-]/gi;
-const hasNotEmail = /[^\w\-\@\.\!\~\*\']/gi;
-const hasNotTelephone = /[^\d\(\)\-']/gi;
 
 moduleTimer("08 march 2022");
 moduleMenu();
@@ -20,6 +14,68 @@ moduleModal();
 serviceBlock();
 moduleCalculate();
 
-validateForm1();
-validateForm2();
-validateForm3();
+const forms = {
+  constransTemplates: {
+    hasNotText: /[^а-яёА-ЯЁ \-]/gi,
+    hasNotEmail: /[^\w\-\@\.\!\~\*\']/gi,
+    hasNotTelephone: /[^\d\(\)\-']/gi,
+  },
+  formList: [
+    {
+      formId: "form1",
+      formFields: [
+        {
+          fieldId: "form1-name",
+          fieldConstrians: ["hasNotText"],
+        },
+        {
+          fieldId: "form1-email",
+          fieldConstrians: ["hasNotEmail"],
+        },
+        {
+          fieldId: "form1-phone",
+          fieldConstrians: ["hasNotTelephone"],
+        },
+      ],
+    },
+    {
+      formId: "form2",
+      formFields: [
+        {
+          fieldId: "form2-name",
+          fieldConstrians: ["hasNotText"],
+        },
+        {
+          fieldId: "form2-message",
+          fieldConstrians: ["hasNotText"],
+        },
+        {
+          fieldId: "form2-email",
+          fieldConstrians: ["hasNotEmail"],
+        },
+        {
+          fieldId: "form2-phone",
+          fieldConstrians: ["hasNotTelephone"],
+        },
+      ],
+    },
+    {
+      formId: "form3",
+      formFields: [
+        {
+          fieldId: "form3-name",
+          fieldConstrians: ["hasNotText"],
+        },
+        {
+          fieldId: "form3-email",
+          fieldConstrians: ["hasNotEmail"],
+        },
+        {
+          fieldId: "form3-phone",
+          fieldConstrians: ["hasNotTelephone"],
+        },
+      ],
+    },
+  ],
+};
+formValidate(forms);
