@@ -10,12 +10,16 @@ import validateForm3 from "./modules/validateForm3";
 //validateForm
 
 //import smoothScroll from "./modules/smoothScroll";
+const hasNotText = /[^а-яёА-ЯЁ \-]/gi;
+const hasNotEmail = /[^\w\-\@\.\!\~\*\']/gi;
+const hasNotTelephone = /[^\d\(\)\-']/gi;
 
 moduleTimer("08 march 2022");
 moduleMenu();
 moduleModal();
 serviceBlock();
 moduleCalculate();
+
 validateForm1();
 validateForm2();
 validateForm3();
