@@ -1,24 +1,20 @@
 import smoothScroll from "./smoothScroll";
-const menu = () => {
+export const menu = () => {
   const menuButton = document.querySelector(".menu");
   const menuContent = document.querySelector("menu");
-  const closeButton = menuContent.querySelector(".close-btn");
-  const menuItems = menuContent.querySelectorAll("ul>li>a");
 
-  const toggleMenu = () => {
+  const toggleMenu = (e) => {
+    if (e.target.matches("ul>li>a")) {
+      e.preventDefault();
+      smoothScroll(e.target);
+    } else if (e.target.classList.contains("close-btn")) {
+    } else if (e.target.closest(".menu")) {
+    } else {
+      return;
+    }
     menuContent.classList.toggle("active-menu");
   };
 
-  menuButton.addEventListener("click", toggleMenu);
-  closeButton.addEventListener("click", toggleMenu);
-
-  menuItems.forEach((item) =>
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      toggleMenu();
-      smoothScroll(e.target);
-    })
-  );
+  menuButton.addEventListener("click", (e) => toggleMenu(e));
+  menuContent.addEventListener("click", (e) => toggleMenu(e));
 };
-
-export default menu;
