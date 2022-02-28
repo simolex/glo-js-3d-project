@@ -60,6 +60,5 @@ const formValidate = (forms) => {
       !isError && console.log("Данные отправлены");
     });
   });
-  console.log(forms);
 };
 export default formValidate;

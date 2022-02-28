@@ -3,6 +3,7 @@ import moduleMenu from "./modules/menu";
 import moduleModal from "./modules/modal";
 import serviceBlock from "./modules/serviceBlock";
 import moduleCalculate from "./modules/calculate";
+import { tabs } from "./modules/tabs";
 
 import formValidate from "./modules/formValidate";
 
@@ -79,3 +80,5 @@ const forms = {
   ],
 };
 formValidate(forms);
+
+tabs();
