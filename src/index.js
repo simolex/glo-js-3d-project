@@ -5,6 +5,7 @@ import serviceBlock from "./modules/serviceBlock";
 import moduleCalculate from "./modules/calculate";
 
 import formValidate from "./modules/formValidate";
+import { slider } from "./modules/slider";
 
 //import smoothScroll from "./modules/smoothScroll";
 
@@ -79,3 +80,4 @@ const forms = {
   ],
 };
 formValidate(forms);
+slider();
