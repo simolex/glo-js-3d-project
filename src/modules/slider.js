@@ -4,13 +4,13 @@ export const slider = () => {
   const dotBlock = document.querySelector(".portfolio-dots");
   const timeInterval = 2000;
 
-  let currentSlide;
+  let currentSlide = 0;
   let interval;
   let dots;
 
   const initSlide = (activeClassSlide, activeClassDot) => {
     dotBlock.innerHTML = "";
-    currentSlide = 0;
+
     sliders.forEach((slide, index) => {
       const dot = document.createElement("li");
       dot.classList.add("dot");
@@ -21,7 +21,7 @@ export const slider = () => {
       dotBlock.append(dot);
     });
 
-    // dots = document.querySelectorAll(".dot");
+    dots = document.querySelectorAll(".dot");
     // if (!currentSlide && sliders.length > 0) {
     //   currentSlide = 0;
     // }
