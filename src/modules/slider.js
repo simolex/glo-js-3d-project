@@ -35,6 +35,7 @@ export const slider = (currentSettings) => {
 
   const initSlide = (activeClassSlide, activeClassDot) => {
     dotBlock.innerHTML = "";
+
     sliders.forEach((slide, index) => {
       const dot = document.createElement("li");
       dot.classList.add(settings.itemDotClass);
