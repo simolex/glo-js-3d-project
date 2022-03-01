@@ -1,4 +1,18 @@
-export const slider = (settings) => {
+export const slider = (currentSettings) => {
+  const settings = {
+    autoInterval: 2000,
+    sliderClass: "portfolio-content",
+    itemSlideClass: "portfolio-item",
+    activeSlideClass: "slide-active",
+    dotsBlock: "portfolio-dots",
+    itemDotClass: "dot",
+    activeDotClass: "dot-active",
+    arrowClass: "portfolio-btn",
+    prevArrowClass: "prev",
+    nextArrowClass: "next",
+    ...currentSettings,
+  };
+
   const sliderBlock = document.querySelector(`.${settings.sliderClass}`);
   const sliders = document.querySelectorAll(`.${settings.itemSlideClass}`);
   const dotBlock = document.querySelector(`.${settings.dotsBlock}`);
@@ -7,6 +21,17 @@ export const slider = (settings) => {
   let currentSlide = 0;
   let interval;
   let dots;
+
+  const validSettings = () => {
+    for (let props in settings) {
+      if (props !== "autoInterval") {
+        if (!document.querySelector(`.${settings[props]}`)) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
 
   const initSlide = (activeClassSlide, activeClassDot) => {
     dotBlock.innerHTML = "";
@@ -21,9 +46,6 @@ export const slider = (settings) => {
     });
 
     dots = document.querySelectorAll(`.${settings.itemDotClass}`);
-    // if (!currentSlide && sliders.length > 0) {
-    //   currentSlide = 0;
-    // }
   };
 
   const prevSlide = (elems, index, strClass) => {
@@ -59,46 +81,48 @@ export const slider = (settings) => {
     clearInterval(interval);
   };
 
-  sliderBlock.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (!e.target.matches(`.${settings.arrowClass}, .${settings.itemDotClass}`)) {
-      return;
-    }
-    motionSlide(() => {
-      if (e.target.matches(`.${settings.arrowClass}.${settings.prevArrowClass}`)) {
-        currentSlide = currentSlide > 0 ? currentSlide - 1 : sliders.length - 1;
-      } else if (e.target.matches(`.${settings.arrowClass}.${settings.nextArrowClass}`)) {
-        currentSlide = currentSlide < sliders.length - 1 ? currentSlide + 1 : 0;
-      } else if (e.target.classList.contains(settings.itemDotClass)) {
-        dots.forEach((dot, index) => {
-          if (e.target === dot) {
-            currentSlide = index;
-          }
-        });
+  if (validSettings()) {
+    sliderBlock.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (!e.target.matches(`.${settings.arrowClass}, .${settings.itemDotClass}`)) {
+        return;
       }
+      motionSlide(() => {
+        if (e.target.matches(`.${settings.arrowClass}.${settings.prevArrowClass}`)) {
+          currentSlide = currentSlide > 0 ? currentSlide - 1 : sliders.length - 1;
+        } else if (e.target.matches(`.${settings.arrowClass}.${settings.nextArrowClass}`)) {
+          currentSlide = currentSlide < sliders.length - 1 ? currentSlide + 1 : 0;
+        } else if (e.target.classList.contains(settings.itemDotClass)) {
+          dots.forEach((dot, index) => {
+            if (e.target === dot) {
+              currentSlide = index;
+            }
+          });
+        }
+      });
     });
-  });
 
-  sliderBlock.addEventListener(
-    "mouseenter",
-    (e) => {
-      if (e.target.matches(`.${settings.arrowClass}, .${settings.itemDotClass}`)) {
-        stopSlide();
-      }
-    },
-    true
-  );
+    sliderBlock.addEventListener(
+      "mouseenter",
+      (e) => {
+        if (e.target.matches(`.${settings.arrowClass}, .${settings.itemDotClass}`)) {
+          stopSlide();
+        }
+      },
+      true
+    );
 
-  sliderBlock.addEventListener(
-    "mouseleave",
-    (e) => {
-      if (e.target.matches(`.${settings.arrowClass}, .${settings.itemDotClass}`)) {
-        startSlide(timeInterval);
-      }
-    },
-    true
-  );
+    sliderBlock.addEventListener(
+      "mouseleave",
+      (e) => {
+        if (e.target.matches(`.${settings.arrowClass}, .${settings.itemDotClass}`)) {
+          startSlide(timeInterval);
+        }
+      },
+      true
+    );
 
-  initSlide(settings.activeSlideClass, settings.activeDotClass);
-  startSlide(timeInterval);
+    initSlide(settings.activeSlideClass, settings.activeDotClass);
+    startSlide(timeInterval);
+  }
 };

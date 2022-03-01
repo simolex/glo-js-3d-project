@@ -81,15 +81,16 @@ const forms = {
 };
 formValidate(forms);
 
-slider({
-  autoInterval: 2000,
-  sliderClass: "portfolio-content",
-  itemSlideClass: "portfolio-item",
-  activeSlideClass: "portfolio-item-active",
-  dotsBlock: "portfolio-dots",
-  itemDotClass: "dot",
-  activeDotClass: "dot-active",
-  arrowClass: "portfolio-btn",
-  prevArrowClass: "prev",
-  nextArrowClass: "next",
-});
+slider({ autoInterval: 2000, activeDotClass: "dot-active", activeSlideClass: "portfolio-item-active" });
+//   {
+//   autoInterval: 2000,
+//   sliderClass: "portfolio-content",
+//   itemSlideClass: "portfolio-item",
+//   activeSlideClass: "portfolio-item-active",
+//   dotsBlock: "portfolio-dots",
+//   itemDotClass: "dot",
+//   activeDotClass: "dot-active",
+//   arrowClass: "portfolio-btn",
+//   prevArrowClass: "prev",
+//   nextArrowClass: "next",
+// }
