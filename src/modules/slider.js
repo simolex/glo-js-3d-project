@@ -1,4 +1,4 @@
-export const slider = (currentSettings) => {
+const slider = (currentSettings) => {
   const settings = {
     autoInterval: 2000,
     sliderClass: "portfolio-content",
@@ -23,12 +23,11 @@ export const slider = (currentSettings) => {
   let dots;
 
   const validSettings = () => {
-    for (let props in settings) {
-      if (props !== "autoInterval") {
-        if (!document.querySelector(`.${settings[props]}`)) {
-          return false;
-        }
-      }
+    if (
+      !document.querySelector(`.${settings["sliderClass"]}`) &&
+      !document.querySelector(`.${settings["itemSlideClass"]}`)
+    ) {
+      return false;
     }
     return true;
   };
@@ -127,3 +126,4 @@ export const slider = (currentSettings) => {
     startSlide(timeInterval);
   }
 };
+export default slider;

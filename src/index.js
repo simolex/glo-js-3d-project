@@ -5,7 +5,8 @@ import serviceBlock from "./modules/serviceBlock";
 import moduleCalculate from "./modules/calculate";
 
 import formValidate from "./modules/formValidate";
-import { slider } from "./modules/slider";
+import slider from "./modules/slider";
+import slider2 from "./modules/slider";
 
 //import smoothScroll from "./modules/smoothScroll";
 
@@ -94,3 +95,5 @@ slider({ autoInterval: 2000, activeDotClass: "dot-active", activeSlideClass: "po
 //   prevArrowClass: "prev",
 //   nextArrowClass: "next",
 // }
+
+//slider2();
