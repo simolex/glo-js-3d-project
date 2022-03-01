@@ -1,16 +1,16 @@
-export const slider = () => {
-  const sliderBlock = document.querySelector(".portfolio-content");
-  const sliders = document.querySelectorAll(".portfolio-item");
-  const dotBlock = document.querySelector(".portfolio-dots");
+export const slider = (settings) => {
+  const sliderBlock = document.querySelector(`.${settings.sliderClass}`);
+  const sliders = document.querySelectorAll(`.${settings.itemSlideClass}`);
+  const dotBlock = document.querySelector(`.${settings.dotsBlock}`);
   const timeInterval = 2000;
 
-  let currentSlide;
+  let currentSlide = 0;
   let interval;
   let dots;
 
   const initSlide = (activeClassSlide, activeClassDot) => {
+    console.log(activeClassSlide, activeClassDot);
     dotBlock.innerHTML = "";
-    currentSlide = 0;
     sliders.forEach((slide, index) => {
       const dot = document.createElement("li");
       dot.classList.add("dot");
@@ -31,7 +31,7 @@ export const slider = () => {
     elems[index].classList.remove(strClass);
   };
 
-  const nextlide = (elems, index, strClass) => {
+  const nextSlide = (elems, index, strClass) => {
     elems[index].classList.add(strClass);
   };
 
@@ -41,11 +41,12 @@ export const slider = () => {
 
     callbackMotion();
 
-    nextlide(sliders, currentSlide, "portfolio-item-active");
-    nextlide(dots, currentSlide, "dot-active");
+    nextSlide(sliders, currentSlide, "portfolio-item-active");
+    nextSlide(dots, currentSlide, "dot-active");
   };
 
   const autoSlide = () => {
+    console.log(currentSlide);
     motionSlide(() => {
       currentSlide = currentSlide < sliders.length - 1 ? currentSlide + 1 : 0;
     });
@@ -98,6 +99,7 @@ export const slider = () => {
     },
     true
   );
-  initSlide("portfolio-item-active", "dot-active");
+
+  initSlide(settings.activeSlideClass, settings.activeDotClass);
   startSlide(timeInterval);
 };

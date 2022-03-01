@@ -80,4 +80,14 @@ const forms = {
   ],
 };
 formValidate(forms);
-slider();
+
+slider({
+  sliderClass: "portfolio-content",
+  itemSlideClass: "portfolio-item",
+  activeSlideClass: "portfolio-item-active",
+  dotsBlock: "portfolio-dots",
+  itemDotClass: "dot",
+  activeDotClass: "dot-active",
+  prevArrowClass: "portfolio-btn prev",
+  nextArrowClass: "portfolio-btn next",
+});
