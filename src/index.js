@@ -82,12 +82,14 @@ const forms = {
 formValidate(forms);
 
 slider({
+  autoInterval: 2000,
   sliderClass: "portfolio-content",
   itemSlideClass: "portfolio-item",
   activeSlideClass: "portfolio-item-active",
   dotsBlock: "portfolio-dots",
   itemDotClass: "dot",
   activeDotClass: "dot-active",
-  prevArrowClass: "portfolio-btn prev",
-  nextArrowClass: "portfolio-btn next",
+  arrowClass: "portfolio-btn",
+  prevArrowClass: "prev",
+  nextArrowClass: "next",
 });
