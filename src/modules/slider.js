@@ -22,16 +22,6 @@ const slider = (currentSettings) => {
   let interval;
   let dots;
 
-  const validSettings = () => {
-    if (
-      !document.querySelector(`.${settings["sliderClass"]}`) &&
-      !document.querySelector(`.${settings["itemSlideClass"]}`)
-    ) {
-      return false;
-    }
-    return true;
-  };
-
   const initSlide = (activeClassSlide, activeClassDot) => {
     dotBlock.innerHTML = "";
 
@@ -81,7 +71,9 @@ const slider = (currentSettings) => {
     clearInterval(interval);
   };
 
-  if (validSettings()) {
+  if (!!sliderBlock && sliders.length > 0) {
+    initSlide(settings.activeSlideClass, settings.activeDotClass);
+
     sliderBlock.addEventListener("click", (e) => {
       e.preventDefault();
       if (!e.target.matches(`.${settings.arrowClass}, .${settings.itemDotClass}`)) {
@@ -122,7 +114,6 @@ const slider = (currentSettings) => {
       true
     );
 
-    initSlide(settings.activeSlideClass, settings.activeDotClass);
     startSlide(timeInterval);
   }
 };
