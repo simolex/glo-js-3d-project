@@ -5,6 +5,18 @@ const calculate = (price = 100) => {
   const calcCount = document.querySelector(".calc-count");
   const calcDay = document.querySelector(".calc-day");
   const total = document.getElementById("total");
+  const speedTotalValue = 50;
+  let timeoutId;
+
+  const showTotalValue = (targetTotalValue) => {
+    let currentValue = +total.textContent;
+    currentValue += Math.round((targetTotalValue - currentValue) / 1.99);
+    total.textContent = currentValue;
+
+    if (currentValue !== targetTotalValue) {
+      timeoutId = setTimeout(() => showTotalValue(targetTotalValue), speedTotalValue);
+    }
+  };
 
   const calculateResult = () => {
     const calcTypeValue = +calcType.options[calcType.selectedIndex].value;
@@ -24,12 +36,15 @@ const calculate = (price = 100) => {
     }
 
     if (calcType.value && calcSquare.value) {
-      //calcCount.value;
       totalValue = price * calcTypeValue * calcSquareValue * calcCountValue * calcDayValue;
     } else {
       totalValue = 0;
     }
-    total.textContent = totalValue;
+
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    showTotalValue(totalValue);
   };
 
   calcBlock.addEventListener("input", (e) => {
