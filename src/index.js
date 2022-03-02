@@ -6,6 +6,7 @@ import moduleCalculate from "./modules/calculate";
 import { tabs } from "./modules/tabs";
 
 import formValidate from "./modules/formValidate";
+import { slider } from "./modules/slider";
 
 //import smoothScroll from "./modules/smoothScroll";
 
@@ -82,3 +83,4 @@ const forms = {
 formValidate(forms);
 
 tabs();
+slider();
