@@ -1,11 +1,63 @@
-const calculate = () => {
-  const calcItems = document.querySelectorAll(".calc-item");
+const calculate = (price = 100) => {
+  const calcBlock = document.querySelector(".calc-block");
+  const calcType = document.querySelector(".calc-type");
+  const calcSquare = document.querySelector(".calc-square");
+  const calcCount = document.querySelector(".calc-count");
+  const calcDay = document.querySelector(".calc-day");
+  const total = document.getElementById("total");
+  const speedTotalValue = 50;
+  let timeoutId;
 
-  calcItems.forEach((item) => {
-    if (!item.classList.contains("calc-type")) {
-      item.addEventListener("input", (e) => {
+  const showTotalValue = (targetTotalValue) => {
+    let currentValue = +total.textContent;
+    currentValue += Math.round((targetTotalValue - currentValue) / 1.99);
+    total.textContent = currentValue;
+
+    if (currentValue !== targetTotalValue) {
+      timeoutId = setTimeout(() => showTotalValue(targetTotalValue), speedTotalValue);
+    }
+  };
+
+  const calculateResult = () => {
+    const calcTypeValue = +calcType.options[calcType.selectedIndex].value;
+    const calcSquareValue = calcSquare.value;
+    let totalValue = 0;
+    let calcCountValue = 1;
+    let calcDayValue = 1;
+
+    if (calcDay.value && calcDay.value < 5) {
+      calcDayValue = 2;
+    } else if (calcDay.value && calcDay.value < 10) {
+      calcDayValue = 1.5;
+    }
+
+    if (calcCount.value > 1) {
+      calcCountValue += +calcCount.value / 10;
+    }
+
+    if (calcType.value && calcSquare.value) {
+      totalValue = price * calcTypeValue * calcSquareValue * calcCountValue * calcDayValue;
+    } else {
+      totalValue = 0;
+    }
+
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    showTotalValue(totalValue);
+  };
+
+  calcBlock.addEventListener("input", (e) => {
+    if (
+      e.target === calcType ||
+      e.target === calcSquare ||
+      e.target === calcCount ||
+      e.target === calcDay
+    ) {
+      if (e.target !== calcType) {
         e.target.value = e.target.value.replace(/\D+/gi, "");
-      });
+      }
+      calculateResult();
     }
   });
 };

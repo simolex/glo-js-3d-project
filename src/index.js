@@ -15,7 +15,7 @@ moduleTimer("08 march 2022");
 menu();
 moduleModal();
 serviceBlock();
-moduleCalculate();
+moduleCalculate(100);
 
 const forms = {
   constransTemplates: {
