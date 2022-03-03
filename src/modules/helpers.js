@@ -42,3 +42,13 @@ const quadEaseInOut = makeEaseInOut(animateQuad);
 const circEaseInOut = makeEaseInOut(animateCirc);
 
 export { animate, quadEaseInOut, circEaseInOut };
+
+// animate({
+//   duration: 400,
+//   timing: circEaseInOut,
+//   draw(progress) {
+//     modalBlock.style.top = `${
+//       percentStartPosition + Math.round((percentStopPosition - percentStartPosition) * progress)
+//     }%`;
+//   },
+// });

@@ -1,3 +1,5 @@
+import { animate } from "./helpers";
+
 const calculate = (price = 100) => {
   const calcBlock = document.querySelector(".calc-block");
   const calcType = document.querySelector(".calc-type");
@@ -5,18 +7,8 @@ const calculate = (price = 100) => {
   const calcCount = document.querySelector(".calc-count");
   const calcDay = document.querySelector(".calc-day");
   const total = document.getElementById("total");
-  const speedTotalValue = 50;
-  let timeoutId;
 
-  const showTotalValue = (targetTotalValue) => {
-    let currentValue = +total.textContent;
-    currentValue += Math.round((targetTotalValue - currentValue) / 1.99);
-    total.textContent = currentValue;
-
-    if (currentValue !== targetTotalValue) {
-      timeoutId = setTimeout(() => showTotalValue(targetTotalValue), speedTotalValue);
-    }
-  };
+  let startAnimateValue, targetAnimateValue;
 
   const calculateResult = () => {
     const calcTypeValue = +calcType.options[calcType.selectedIndex].value;
@@ -41,10 +33,17 @@ const calculate = (price = 100) => {
       totalValue = 0;
     }
 
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-    showTotalValue(totalValue);
+    startAnimateValue = +total.textContent;
+    targetAnimateValue = totalValue;
+
+    animate({
+      duration: 400,
+      timing: (timeFraction) => timeFraction,
+      draw(progress) {
+        total.textContent =
+          startAnimateValue + Math.round((targetAnimateValue - startAnimateValue) * progress);
+      },
+    });
   };
 
   calcBlock.addEventListener("input", (e) => {
