@@ -2,6 +2,27 @@
  * https://learn.javascript.ru/js-animation#bolee-interesnaya-funktsiya-draw
  */
 
+const animateQuad = (timeFraction) => {
+  return Math.pow(timeFraction, 2);
+};
+
+const animateCirc = (timeFraction) => {
+  return 1 - Math.sin(Math.acos(timeFraction));
+};
+
+const makeEaseInOut = (timing) => {
+  return function (timeFraction) {
+    if (timeFraction < 0.5) {
+      return timing(2 * timeFraction) / 2;
+    } else {
+      return (2 - timing(2 * (1 - timeFraction))) / 2;
+    }
+  };
+};
+
+const quadEaseInOut = makeEaseInOut(animateQuad);
+const circEaseInOut = makeEaseInOut(animateCirc);
+
 const animate = ({ timing, draw, duration }) => {
   let start = performance.now();
 
@@ -22,24 +43,6 @@ const animate = ({ timing, draw, duration }) => {
     }
   });
 };
-const makeEaseInOut = (timing) => {
-  return function (timeFraction) {
-    if (timeFraction < 0.5) {
-      return timing(2 * timeFraction) / 2;
-    } else {
-      return (2 - timing(2 * (1 - timeFraction))) / 2;
-    }
-  };
-};
-const animateQuad = (timeFraction) => {
-  return Math.pow(timeFraction, 2);
-};
-
-function animateCirc(timeFraction) {
-  return 1 - Math.sin(Math.acos(timeFraction));
-}
-const quadEaseInOut = makeEaseInOut(animateQuad);
-const circEaseInOut = makeEaseInOut(animateCirc);
 
 export { animate, quadEaseInOut, circEaseInOut };
 
