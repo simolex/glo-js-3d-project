@@ -8,22 +8,21 @@ const calculate = (price = 100) => {
   const calcDay = document.querySelector(".calc-day");
   const total = document.getElementById("total");
 
-  let startAnimateValue, targetAnimateValue;
-
   const calculateResult = () => {
     const calcTypeValue = +calcType.options[calcType.selectedIndex].value;
-    const calcSquareValue = calcSquare.value;
+    const calcSquareValue = +calcSquare.value;
+    let startAnimateValue, targetAnimateValue;
     let totalValue = 0;
     let calcCountValue = 1;
     let calcDayValue = 1;
 
-    if (calcDay.value && calcDay.value < 5) {
+    if (calcDay.value && +calcDay.value < 5) {
       calcDayValue = 2;
     } else if (calcDay.value && calcDay.value < 10) {
       calcDayValue = 1.5;
     }
 
-    if (calcCount.value > 1) {
+    if (+calcCount.value > 1) {
       calcCountValue += +calcCount.value / 10;
     }
 
