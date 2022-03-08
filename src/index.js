@@ -7,7 +7,7 @@ import { tabs } from "./modules/tabs";
 
 import formValidate from "./modules/formValidate";
 import slider from "./modules/slider";
-import slider2 from "./modules/slider";
+import sendForm from "./modules/sendForm";
 
 //import smoothScroll from "./modules/smoothScroll";
 
@@ -99,3 +99,12 @@ slider({ autoInterval: 2000, activeDotClass: "dot-active", activeSlideClass: "po
 // }
 
 //slider2();
+sendForm({
+  formId: "form1",
+  someElement: [
+    {
+      type: "block",
+      id: "total",
+    },
+  ],
+});
