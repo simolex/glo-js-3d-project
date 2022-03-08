@@ -19,24 +19,25 @@ moduleCalculate(100);
 
 const forms = {
   constransTemplates: {
-    hasNotText: /[^а-яёА-ЯЁ \-]/gi,
+    hasNotName: /[^а-яёА-ЯЁ \-]/gi,
+    hasNotMessage: /[^а-яёА-ЯЁ \-\.\!\?\:\;\(\)0-9]/gi,
     hasNotEmail: /[^\w\-\@\.\!\~\*\']/gi,
-    hasNotTelephone: /[^\d\(\)\-']/gi,
+    hasNotTelephone: /[^\d\(\)\-\+]/gi,
   },
   formList: [
     {
       formId: "form1",
       formFields: [
         {
-          fieldId: "form1-name",
-          fieldConstrians: ["hasNotText"],
+          fieldSelector: "input[name=user_name]",
+          fieldConstrians: ["hasNotName"],
         },
         {
-          fieldId: "form1-email",
+          fieldSelector: "input[name=user_email]",
           fieldConstrians: ["hasNotEmail"],
         },
         {
-          fieldId: "form1-phone",
+          fieldSelector: "input[name=user_phone]",
           fieldConstrians: ["hasNotTelephone"],
         },
       ],
@@ -45,19 +46,19 @@ const forms = {
       formId: "form2",
       formFields: [
         {
-          fieldId: "form2-name",
-          fieldConstrians: ["hasNotText"],
+          fieldSelector: "input[name=user_name]",
+          fieldConstrians: ["hasNotName"],
         },
         {
-          fieldId: "form2-message",
-          fieldConstrians: ["hasNotText"],
+          fieldSelector: "input[name=user_message]",
+          fieldConstrians: ["hasNotMessage"],
         },
         {
-          fieldId: "form2-email",
+          fieldSelector: "input[name=user_email]",
           fieldConstrians: ["hasNotEmail"],
         },
         {
-          fieldId: "form2-phone",
+          fieldSelector: "input[name=user_phone]",
           fieldConstrians: ["hasNotTelephone"],
         },
       ],
@@ -66,15 +67,15 @@ const forms = {
       formId: "form3",
       formFields: [
         {
-          fieldId: "form3-name",
+          fieldSelector: "input[name=user_name]",
           fieldConstrians: ["hasNotText"],
         },
         {
-          fieldId: "form3-email",
+          fieldSelector: "input[name=user_email]",
           fieldConstrians: ["hasNotEmail"],
         },
         {
-          fieldId: "form3-phone",
+          fieldSelector: "input[name=user_phone]",
           fieldConstrians: ["hasNotTelephone"],
         },
       ],
@@ -107,4 +108,10 @@ sendForm({
       id: "total",
     },
   ],
+});
+sendForm({
+  formId: "form2",
+});
+sendForm({
+  formId: "form3",
 });

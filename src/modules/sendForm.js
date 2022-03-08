@@ -7,11 +7,11 @@ const sendForm = ({ formId, someElement = [] }) => {
 
   const validate = (list) => {
     let success = true;
-    //  list.forEach((input) => {
-    //    if (!input.classList.contains("success")) {
-    //      success = false;
-    //    }
-    //  });
+    list.forEach((input) => {
+      if (!input.classList.contains("is-invalid")) {
+        success = false;
+      }
+    });
     return success;
   };
 

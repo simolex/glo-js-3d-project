@@ -20,45 +20,58 @@ const formValidate = (forms) => {
     return value;
   };
 
-  forms.formList.forEach((formItem) => {
-    formItem.form = document.getElementById(formItem.formId);
-    formItem.formFields.forEach((fieldItem) => {
-      fieldItem.field = document.getElementById(fieldItem.fieldId);
-      fieldItem.field.addEventListener("input", (e) => {
-        e.target.value = e.target.value.replace(
-          forms.constransTemplates[fieldItem.fieldConstrians[0]], //для одного ограничения
-          ""
-        );
-      });
-      fieldItem.field.addEventListener("blur", (e) => {
-        e.target.value = clearData(
-          forms.constransTemplates[fieldItem.fieldConstrians[0]], //для одного ограничения
-          e.target.value
-        );
-        if (/name/gi.test(fieldItem.fieldId)) {
-          e.target.value = upperFirstLitter(e.target.value);
+  try {
+    forms.formList.forEach((formItem) => {
+      formItem.form = document.getElementById(formItem.formId);
+      if (!formItem.form) {
+        throw new Error(`Отсутствует элемент с id="${formItem.formId}"`);
+      }
+      formItem.formFields.forEach((fieldItem) => {
+        fieldItem.field = formItem.form.querySelector(fieldItem.fieldSelector);
+        if (!fieldItem.field) {
+          throw new Error(`Отсутствует элемент с селектором="${formItem.formId}"`);
         }
+        fieldItem.field.classList.add("form-control");
+        fieldItem.field.addEventListener("input", (e) => {
+          e.target.value = e.target.value.replace(
+            forms.constransTemplates[fieldItem.fieldConstrians[0]], //для одного ограничения
+            ""
+          );
+          e.target.classList.remove("is-valid");
+          e.target.classList.remove("is-invalid");
+        });
+        fieldItem.field.addEventListener("blur", (e) => {
+          e.target.value = clearData(
+            forms.constransTemplates[fieldItem.fieldConstrians[0]], //для одного ограничения
+            e.target.value
+          );
+          if (/user_name/gi.test(fieldItem.fieldSelector)) {
+            e.target.value = upperFirstLitter(e.target.value);
+          }
+        });
+      });
+
+      formItem.form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const selfFields = formItem.formFields;
+
+        selfFields.forEach((fieldItem) => {
+          if (
+            !forms.constransTemplates[fieldItem.fieldConstrians[0]].test(fieldItem.field.value) && //для одного ограничения
+            fieldItem.field.value !== ""
+          ) {
+            fieldItem.field.classList.remove("is-invalid");
+            fieldItem.field.classList.add("is-valid");
+          } else {
+            fieldItem.field.classList.remove("is-valid");
+            fieldItem.field.classList.add("is-invalid");
+          }
+        });
       });
     });
-
-    formItem.form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const selfFields = formItem.formFields;
-      let isError = false;
-
-      selfFields.forEach((fieldItem) => {
-        if (
-          !forms.constransTemplates[fieldItem.fieldConstrians[0]].test(fieldItem.field.value) && //для одного ограничения
-          fieldItem.field.value !== ""
-        ) {
-          console.log("Поле корректное");
-        } else {
-          isError = true;
-        }
-      });
-
-      !isError && console.log("Данные отправлены");
-    });
-  });
+  } catch (error) {
+    console.log(error.message);
+  }
 };
+
 export default formValidate;
