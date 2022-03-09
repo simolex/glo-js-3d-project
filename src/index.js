@@ -5,9 +5,8 @@ import serviceBlock from "./modules/serviceBlock";
 import moduleCalculate from "./modules/calculate";
 import { tabs } from "./modules/tabs";
 
-import formValidate from "./modules/formValidate";
+import applyForm from "./modules/applyForm";
 import slider from "./modules/slider";
-import sendForm from "./modules/sendForm";
 
 //import smoothScroll from "./modules/smoothScroll";
 
@@ -41,6 +40,12 @@ const forms = {
           fieldConstrians: ["hasNotTelephone"],
         },
       ],
+      someElement: [
+        {
+          type: "block",
+          id: "total",
+        },
+      ],
     },
     {
       formId: "form2",
@@ -68,7 +73,7 @@ const forms = {
       formFields: [
         {
           fieldSelector: "input[name=user_name]",
-          fieldConstrians: ["hasNotText"],
+          fieldConstrians: ["hasNotName"],
         },
         {
           fieldSelector: "input[name=user_email]",
@@ -82,10 +87,14 @@ const forms = {
     },
   ],
 };
-formValidate(forms);
+applyForm(forms);
 
 tabs();
-slider({ autoInterval: 2000, activeDotClass: "dot-active", activeSlideClass: "portfolio-item-active" });
+slider({
+  autoInterval: 2000,
+  activeDotClass: "dot-active",
+  activeSlideClass: "portfolio-item-active",
+});
 //   {
 //   autoInterval: 2000,
 //   sliderClass: "portfolio-content",
@@ -98,20 +107,3 @@ slider({ autoInterval: 2000, activeDotClass: "dot-active", activeSlideClass: "po
 //   prevArrowClass: "prev",
 //   nextArrowClass: "next",
 // }
-
-//slider2();
-sendForm({
-  formId: "form1",
-  someElement: [
-    {
-      type: "block",
-      id: "total",
-    },
-  ],
-});
-sendForm({
-  formId: "form2",
-});
-sendForm({
-  formId: "form3",
-});
