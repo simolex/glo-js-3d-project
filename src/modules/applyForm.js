@@ -1,5 +1,11 @@
 const applyForm = (forms) => {
-  const loadText = "Загрузка...";
+  const loaderBlock = `
+  <div class="sk-three-bounce">
+    <div class="sk-bounce-1 sk-child"></div>
+    <div class="sk-bounce-2 sk-child"></div>
+    <div class="sk-bounce-3 sk-child"></div>
+  </div>
+  `;
   const errorText = "Ошибка..";
   const successText = "Спасибо! Наш менеджер с вами свяжется.";
 
@@ -60,7 +66,7 @@ const applyForm = (forms) => {
     formItem.statusBlock = document.createElement("div");
     formItem.statusBlock.style.color = "white";
 
-    formItem.statusBlock.textContent = loadText;
+    formItem.statusBlock.innerHTML = loaderBlock;
     formItem.form.append(formItem.statusBlock);
 
     formItem.formData.forEach((value, key) => {
@@ -83,13 +89,13 @@ const applyForm = (forms) => {
     if (validate(formItem.formFields)) {
       sendData(formItem.formBody)
         .then((data) => {
-          formItem.statusBlock.textContent = successText;
+          formItem.statusBlock.innerHTML = successText;
           formItem.formFields.forEach((input) => {
             input.value = "";
           });
         })
         .catch((error) => {
-          formItem.statusBlock.textContent = errorText;
+          formItem.statusBlock.innerHTML = errorText;
         });
     } else {
       alert("Данные не валидны!!!");
