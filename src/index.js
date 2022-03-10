@@ -23,6 +23,29 @@ const forms = {
     hasNotEmail: /[^\w\-\@\.\!\~\*\']/gi,
     hasNotTelephone: /[^\d\(\)\-\+]/gi,
   },
+  validateTest: {
+    lengthMin: function (value, length = 1) {
+      return {
+        result: value.length >= +length,
+        message: `Минимальное кол-во символов: ${length}`,
+      };
+    },
+    phoneMask: function (value) {
+      return {
+        result: /\+\d\(\d{3}\)\d{3}-\d{2}-\d{2}/gi.test(value),
+        message: "Шаблон для телефона +0(000)000-00-00",
+      };
+    },
+    email: function (value) {
+      return {
+        result:
+          /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/gi.test(
+            value
+          ),
+        message: "Необходим корректный адрес почты",
+      };
+    },
+  },
   formList: [
     {
       formId: "form1",
@@ -30,14 +53,17 @@ const forms = {
         {
           fieldSelector: "input[name=user_name]",
           fieldConstrians: ["hasNotName"],
+          fieldValidate: [{ test: "lengthMin", args: [2] }],
         },
         {
           fieldSelector: "input[name=user_email]",
           fieldConstrians: ["hasNotEmail"],
+          fieldValidate: [{ test: "email", args: [] }],
         },
         {
           fieldSelector: "input[name=user_phone]",
           fieldConstrians: ["hasNotTelephone"],
+          fieldValidate: [{ test: "phoneMask", args: [] }],
         },
       ],
       someElement: [
@@ -53,18 +79,22 @@ const forms = {
         {
           fieldSelector: "input[name=user_name]",
           fieldConstrians: ["hasNotName"],
+          fieldValidate: [{ test: "lengthMin", args: [2] }],
         },
         {
           fieldSelector: "input[name=user_message]",
           fieldConstrians: ["hasNotMessage"],
+          fieldValidate: [{ test: "lengthMin", args: [2] }],
         },
         {
           fieldSelector: "input[name=user_email]",
           fieldConstrians: ["hasNotEmail"],
+          fieldValidate: [{ test: "email", args: [] }],
         },
         {
           fieldSelector: "input[name=user_phone]",
           fieldConstrians: ["hasNotTelephone"],
+          fieldValidate: [{ test: "phoneMask", args: [] }],
         },
       ],
     },
@@ -74,14 +104,17 @@ const forms = {
         {
           fieldSelector: "input[name=user_name]",
           fieldConstrians: ["hasNotName"],
+          fieldValidate: [{ test: "lengthMin", args: [2] }],
         },
         {
           fieldSelector: "input[name=user_email]",
           fieldConstrians: ["hasNotEmail"],
+          fieldValidate: [{ test: "email", args: [] }],
         },
         {
           fieldSelector: "input[name=user_phone]",
           fieldConstrians: ["hasNotTelephone"],
+          fieldValidate: [{ test: "phoneMask", args: [] }],
         },
       ],
     },
