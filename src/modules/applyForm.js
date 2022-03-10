@@ -53,14 +53,20 @@ const applyForm = (forms) => {
   };
 
   const sendData = (data) => {
-    return fetch("https://jsonplaceholder.typicode.com/posts", {
+    return fetch("https://jsonplaceholder.typicode.com/postыs", {
       // "./dist/server.php"
       method: "POST",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json; charset=utf-8",
       },
-    }).then((resp) => resp.json());
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error("Возникла ошибка при отправке формы");
+      }
+    });
   };
 
   const submitForm = (formItem) => {
@@ -121,6 +127,7 @@ const applyForm = (forms) => {
         })
         .catch((error) => {
           formItem.statusBlock.innerHTML = errorText;
+          console.log(error.message);
         });
     } else {
       alert("Данные не валидны!!!");
