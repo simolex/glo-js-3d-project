@@ -1,3 +1,5 @@
+import { animate, makeEaseOut } from "./helpers";
+
 const applyForm = (forms) => {
   const loaderBlock = `
   <div class="sk-three-bounce">
@@ -6,6 +8,7 @@ const applyForm = (forms) => {
     <div class="sk-bounce-3 sk-child"></div>
   </div>
   `;
+
   const errorText = "Ошибка..";
   const successText = "Спасибо! Наш менеджер с вами свяжется.";
 
@@ -61,38 +64,60 @@ const applyForm = (forms) => {
   };
 
   const submitForm = (formItem) => {
-    formItem.formData = new FormData(formItem.form);
-    formItem.formBody = {};
-    formItem.statusBlock = document.createElement("div");
-    formItem.statusBlock.style.color = "white";
+    if (validate(formItem.formFields)) {
+      formItem.formData = new FormData(formItem.form);
+      formItem.formBody = {};
 
-    formItem.statusBlock.innerHTML = loaderBlock;
-    formItem.form.append(formItem.statusBlock);
+      formItem.statusBlock.innerHTML = loaderBlock;
 
-    formItem.formData.forEach((value, key) => {
-      formItem.formBody[key] = value;
-    });
-    formItem.someElement &&
-      formItem.someElement.forEach((elem) => {
-        const element = document.getElementById(elem.id);
-        if (!element) {
-          throw new Error(`Отсутствует элемент с с id="${elem.id}"`);
-        } else {
-          if (elem.type === "block") {
-            formItem.formBody[elem.id] = element.textContent;
-          } else if (elem.type === "input") {
-            formItem.formBody[elem.id] = element.value;
-          }
-        }
+      formItem.formData.forEach((value, key) => {
+        formItem.formBody[key] = value;
       });
 
-    if (validate(formItem.formFields)) {
+      formItem.someElement &&
+        formItem.someElement.forEach((elem) => {
+          const element = document.getElementById(elem.id);
+          if (!element) {
+            throw new Error(`Отсутствует элемент с с id="${elem.id}"`);
+          } else {
+            if (elem.type === "block") {
+              formItem.formBody[elem.id] = element.textContent;
+            } else if (elem.type === "input") {
+              formItem.formBody[elem.id] = element.value;
+            }
+          }
+        });
+
+      formItem.formFields.forEach((input) => {
+        input.field.disabled = true;
+      });
+      formItem.submitButton.disabled = true;
+
       sendData(formItem.formBody)
         .then((data) => {
           formItem.statusBlock.innerHTML = successText;
-          formItem.formFields.forEach((input) => {
-            input.value = "";
+          formItem.statusBlock.style.opacity = 1;
+          animate({
+            duration: 7000,
+            timing: (time) => 1 - time,
+            draw(progress) {
+              if (formItem.statusBlock.style.opacity) {
+                formItem.statusBlock.style.opacity = progress;
+              }
+            },
           });
+
+          setTimeout(() => {
+            formItem.statusBlock.innerHTML = "";
+            formItem.formFields.forEach((input) => {
+              input.field.classList.remove("is-valid");
+              input.field.disabled = false;
+              input.field.value = "";
+            });
+            delete formItem.formData;
+            formItem.submitButton.disabled = false;
+            formItem.statusBlock.style.opacity = "";
+          }, 5000);
         })
         .catch((error) => {
           formItem.statusBlock.innerHTML = errorText;
@@ -108,6 +133,12 @@ const applyForm = (forms) => {
       if (!formItem.form) {
         throw new Error(`Отсутствует элемент с id="${formItem.formId}"`);
       }
+      formItem.form.noValidate = true;
+      formItem.submitButton = formItem.form.querySelector("button[type=submit]");
+      formItem.statusBlock = document.createElement("div");
+      formItem.statusBlock.style.color = "white";
+      formItem.form.append(formItem.statusBlock);
+
       formItem.formFields.forEach((fieldItem) => {
         fieldItem.field = formItem.form.querySelector(fieldItem.fieldSelector);
         if (!fieldItem.field) {

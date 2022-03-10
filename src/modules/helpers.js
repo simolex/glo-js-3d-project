@@ -10,6 +10,10 @@ const animateCirc = (timeFraction) => {
   return 1 - Math.sin(Math.acos(timeFraction));
 };
 
+const animateElastic = (timeFraction, x = 5) => {
+  return Math.pow(2, 10 * (timeFraction - 1)) * Math.cos(((20 * Math.PI * x) / 3) * timeFraction);
+};
+
 const makeEaseInOut = (timing) => {
   return function (timeFraction) {
     if (timeFraction < 0.5) {
@@ -20,8 +24,15 @@ const makeEaseInOut = (timing) => {
   };
 };
 
+const makeEaseOut = (timing) => {
+  return function (timeFraction) {
+    return 1 - timing(1 - timeFraction);
+  };
+};
+
 const quadEaseInOut = makeEaseInOut(animateQuad);
 const circEaseInOut = makeEaseInOut(animateCirc);
+const elasticEaseOut = makeEaseOut(animateElastic);
 
 const animate = ({ timing, draw, duration }) => {
   let start = performance.now();
@@ -44,7 +55,7 @@ const animate = ({ timing, draw, duration }) => {
   });
 };
 
-export { animate, quadEaseInOut, circEaseInOut };
+export { animate, quadEaseInOut, circEaseInOut, elasticEaseOut, makeEaseOut };
 
 // animate({
 //   duration: 400,
