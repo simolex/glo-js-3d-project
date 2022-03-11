@@ -10,7 +10,7 @@ import slider from "./modules/slider";
 
 //import smoothScroll from "./modules/smoothScroll";
 
-moduleTimer("08 march 2022");
+moduleTimer("24 march 2022");
 menu();
 moduleModal();
 serviceBlock();
@@ -33,7 +33,7 @@ const forms = {
     phoneMask: function (value) {
       return {
         result: /\+\d\(\d{3}\)\d{3}-\d{2}-\d{2}/gi.test(value),
-        message: "Шаблон для телефона +0(000)000-00-00",
+        message: "Шаблон для телефона +x(xxx)xxx-xx-xx",
       };
     },
     email: function (value) {
@@ -70,6 +70,7 @@ const forms = {
         {
           type: "block",
           id: "total",
+          noTheEmpty: "0",
         },
       ],
     },

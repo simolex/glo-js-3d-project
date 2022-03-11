@@ -1,4 +1,5 @@
 import { animate, makeEaseOut } from "./helpers";
+import IMask from "imask";
 
 const applyForm = (forms) => {
   const loaderBlock = `
@@ -126,9 +127,13 @@ const applyForm = (forms) => {
           throw new Error(`Отсутствует элемент с с id="${elem.id}"`);
         } else {
           if (elem.type === "block") {
-            formItem.formBody[elem.id] = element.textContent;
+            if (!elem.noTheEmpty || elem.noTheEmpty !== element.textContent) {
+              formItem.formBody[elem.id] = element.textContent;
+            }
           } else if (elem.type === "input") {
-            formItem.formBody[elem.id] = element.value;
+            if (!elem.noTheEmpty || elem.noTheEmpty !== element.value) {
+              formItem.formBody[elem.id] = element.value;
+            }
           }
         }
       });
@@ -162,6 +167,7 @@ const applyForm = (forms) => {
           delete formItem.formData;
           formItem.submitButton.disabled = false;
           formItem.statusBlock.style.opacity = "";
+          closeModalForm();
         }, 5000);
       })
       .catch((error) => {
@@ -204,6 +210,14 @@ const applyForm = (forms) => {
           e.target.classList.remove("is-valid");
           e.target.classList.remove("is-invalid");
         });
+
+        if (/user_phone/gi.test(fieldItem.fieldSelector)) {
+          fieldItem.phoneMask = IMask(fieldItem.field, {
+            mask: "+{0}(000)000-00-00",
+            lazy: false, // make placeholder always visible
+            placeholderChar: "x", // defaults to '_'
+          });
+        }
         fieldItem.field.addEventListener("blur", (e) => {
           e.target.value = clearData(
             forms.constransTemplates[fieldItem.fieldConstrians[0]], //для одного ограничения

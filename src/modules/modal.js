@@ -1,4 +1,4 @@
-import { animate, circEaseInOut } from "./helpers";
+import { animate, circEaseInOut, enableBodyScroll, disableBodyScroll } from "./helpers";
 
 const modal = () => {
   const modalOverlay = document.querySelector(".popup");
@@ -7,10 +7,16 @@ const modal = () => {
 
   const percentStartPosition = -50;
   const percentStopPosition = 10;
+  window.closeModalForm = () => {};
 
   buttons.forEach((btn) =>
     btn.addEventListener("click", () => {
+      disableBodyScroll(true);
       modalOverlay.style.display = "block";
+      window.closeModalForm = () => {
+        modalOverlay.style.display = "";
+        enableBodyScroll();
+      };
       if (window.outerWidth > 768) {
         animate({
           duration: 400,
@@ -28,6 +34,8 @@ const modal = () => {
   modalOverlay.addEventListener("click", (e) => {
     if (!e.target.closest(".popup-content") || e.target.classList.contains("popup-close")) {
       modalOverlay.style.display = "";
+      enableBodyScroll();
+      window.closeModalForm = () => {};
     }
   });
 };
