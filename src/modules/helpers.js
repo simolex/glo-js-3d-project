@@ -68,7 +68,9 @@ const enableBodyScroll = (callback) => {
       window.scrollTo(window.scrollX, scrollTop);
     }
 
-    if (callback !== undefined) callback();
+    if (callback !== undefined) {
+      callback();
+    }
   } else {
     window.addEventListener("load", enableBodyScroll);
   }
@@ -79,7 +81,9 @@ const disableBodyScroll = (savePosition = false) => {
     document.body.setAttribute("data-scroll-disabled", "true");
 
     if (document.body.scrollHeight > window.innerHeight) {
-      if (savePosition) document.body.style.marginTop = `-${window.pageYOffset}px`;
+      if (savePosition) {
+        document.body.style.marginTop = `-${window.pageYOffset}px`;
+      }
       document.body.style.position = "fixed";
       document.body.style.overflowY = "scroll";
       document.body.style.width = "100%";
@@ -91,8 +95,42 @@ const disableBodyScroll = (savePosition = false) => {
 
 const isDisabledBodyScroll = () => {
   const state = document.body.getAttribute("data-scroll-disabled");
-  if (!state) return "false";
+  if (!state) {
+    return "false";
+  }
   return state;
+};
+
+const phoneMask = (e) => {
+  let keyCode;
+  if (e.keyCode) {
+    keyCode = e.keyCode;
+  }
+  let pos = this.selectionStart;
+  if (pos < 3) e.preventDefault();
+  let matrix = "+_(___)___-__-__",
+    i = 0,
+    def = matrix.replace(/\D/g, ""),
+    val = this.value.replace(/\D/g, ""),
+    newValue = matrix.replace(/[_\d]/g, function (a) {
+      return i < val.length ? val[i++] || def[i] : a;
+    });
+  i = newValue.indexOf("_");
+  if (i != -1) {
+    if (i < 5) {
+      i = 3;
+    }
+    newValue = newValue.slice(0, i);
+  }
+  var reg = matrix
+    .substring(0, this.value.length)
+    .replace(/_+/g, function (a) {
+      return "\\d{1," + a.length + "}";
+    })
+    .replace(/[+()]/g, "\\$&");
+  reg = new RegExp(`^${reg}$`);
+  if (!reg.test(this.value) || this.value.length < 5 || (keyCode > 47 && keyCode < 58)) this.value = new_value;
+  if (e.type == "blur" && this.value.length < 5) this.value = "";
 };
 
 export {

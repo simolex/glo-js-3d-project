@@ -1,5 +1,5 @@
 import { animate, makeEaseOut } from "./helpers";
-import IMask from "imask";
+//import IMask from "imask";
 
 const applyForm = (forms) => {
   const loaderBlock = `
@@ -37,10 +37,7 @@ const applyForm = (forms) => {
         try {
           fieldItem.fieldValidate &&
             fieldItem.fieldValidate.forEach((check) => {
-              const testResult = forms.validateTest[check.test](
-                fieldItem.field.value,
-                ...check.args
-              );
+              const testResult = forms.validateTest[check.test](fieldItem.field.value, ...check.args);
               if (!testResult.result) {
                 StopException.message = testResult.message;
                 throw StopException;
@@ -209,15 +206,22 @@ const applyForm = (forms) => {
           );
           e.target.classList.remove("is-valid");
           e.target.classList.remove("is-invalid");
+
+          const maskPhone = "+_(___)___-__-___";
+
+          if (/user_phone/gi.test(fieldItem.fieldSelector)) {
+            e.preventDefault();
+            let value = e.target.value.replace(/\D/g, "");
+            let i = 0;
+            const numbers = value.padEnd(12, "_");
+
+            value = maskPhone.replace(/(_)/g, (str, $1, ind) => {
+              return numbers[i++];
+            });
+            e.target.value = value.slice(0, value.indexOf("_"));
+          }
         });
 
-        if (/user_phone/gi.test(fieldItem.fieldSelector)) {
-          fieldItem.phoneMask = IMask(fieldItem.field, {
-            mask: "+{0}(000)000-00-00",
-            lazy: false, // make placeholder always visible
-            placeholderChar: "x", // defaults to '_'
-          });
-        }
         fieldItem.field.addEventListener("blur", (e) => {
           e.target.value = clearData(
             forms.constransTemplates[fieldItem.fieldConstrians[0]], //для одного ограничения
