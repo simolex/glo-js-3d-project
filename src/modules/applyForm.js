@@ -207,18 +207,20 @@ const applyForm = (forms) => {
           e.target.classList.remove("is-valid");
           e.target.classList.remove("is-invalid");
 
-          const maskPhone = "+_(___)___-__-___";
+          const maskPhone = "+_(___)___-__-__";
+          const trimEnd = /[\D]+$/g;
 
           if (/user_phone/gi.test(fieldItem.fieldSelector)) {
             e.preventDefault();
             let value = e.target.value.replace(/\D/g, "");
             let i = 0;
-            const numbers = value.padEnd(12, "_");
+            const numbers = value.padEnd(11, "_");
 
             value = maskPhone.replace(/(_)/g, (str, $1, ind) => {
               return numbers[i++];
             });
-            e.target.value = value.slice(0, value.indexOf("_"));
+            e.target.value = value.replace(trimEnd, "");
+            //e.target.value = value.slice(0, value.indexOf("_"));
           }
         });
 
